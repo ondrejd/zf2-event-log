@@ -65,17 +65,13 @@ class LogEntity
 		$column = null;
 		if ($modifier === 'get' && isset($this->columnMap[$property])) {
 			$column = $this->columnMap[$property];
-
-			if (! isset($this->data[$column])) {
-				$column = null;
-			}
 		}
 
 		if (! $column) {
 			trigger_error(sprintf( 'Call to undefined method %s::%s()', __CLASS__, $name), E_USER_ERROR);
 		}
 			
-		$value = $this->data[$column];
+		$value = isset($this->data[$column]) ? $this->data[$column] : null;
 
 		if (in_array($property, $this->serializeProperties)) {
 			$value = $this->getSerializer()->unserialize($value);

@@ -1,0 +1,63 @@
+<?php if ($this->pageCount):?>
+<?php if ($this->pageCount > 1):?>
+<ul class="pagination pagination-centered">
+	<?php if (isset($this->previous)):?>
+		<li>
+			<a href="?page=<?= $this->previous;?>">
+				&lt;&lt;
+			</a>
+		</li>
+	<?php else:?>
+		<li class="disabled">
+			<span>
+				&lt;&lt;
+			</span>
+		</li>
+	<?php endif;?>
+
+	<?php if ($this->first < $this->firstPageInRange): ?>
+		<li>
+			<a href="?page<?= $this->first ?>"><?= $this->first ?></a>
+		</li>
+		<li>
+			<span>...</span>
+		</li>
+	<?php endif; ?>
+
+	<?php foreach ($this->pagesInRange as $page):?>
+		<?php if ($page != $this->current):?>
+			<li>
+				<a href="?page=<?= $page;?>"><?= $page;?></a>
+			</li>
+		<?php else:?>
+			<li class="active">
+				<span><?= $page;?></span>
+			</li>
+		<?php endif;?>
+	<?php endforeach;?>
+
+	<?php if ($this->lastPageInRange < $this->last): ?>
+		<li>
+			<span>...</span>
+		</li>
+		<li>
+			<a href="?page<?= $this->last ?>"><?= $this->last ?></a>
+		</li>
+	<?php endif; ?>
+
+	<?php if (isset($this->next)):?>
+		<li>
+			<a href="?page=<?= $this->next;?>">
+				&gt;&gt;
+			</a>
+		</li>
+	<?php else:?>
+		<li class="disabled">
+			<span>
+				&gt;&gt;
+			</span>
+		</li>
+	<?php endif;?>
+</ul>
+<?php endif;?>
+<?php endif;?>

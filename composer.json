@@ -1,0 +1,29 @@
+{
+	"name": "renbocz/zf2-event-log",
+	"description": "TODO",
+	"type": "library",
+	"license": "MPL-2.0",
+	"keywords": ["zf2", "zend", "module", "log", "event"],
+	"authors": [
+		{
+			"name": "Richard Jedlička",
+			"email": "jedlicka.r@gmail.com",
+			"homepage": "http://uiii.cz"
+		}
+	],
+	"autoload": {
+		"psr-0": {
+			"EventLog\\": "src/"
+		},
+		"classmap": [
+			"./"
+		]
+	},
+	"require": {
+		"php": ">=5.3.3",
+		"zendframework/zendframework": "2.*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "3.7.x-dev"
+	}
+}

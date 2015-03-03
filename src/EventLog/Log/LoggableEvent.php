@@ -28,7 +28,12 @@ class LoggableEvent extends Event implements LoggableEventInterface, TranslatorA
 	/**
 	 * @var string
 	 */
-	protected $messageTemplate = "The event %name% occured";
+	protected $defaultMessageTemplate = 'The event %name% occured';
+
+	/**
+	 * @var string
+	 */
+	protected $messageTemplate;
 
 	/**
 	 * @var int
@@ -55,7 +60,7 @@ class LoggableEvent extends Event implements LoggableEventInterface, TranslatorA
 	 */
 	public function getMessage()
 	{
-		return $this->_createMessage($this->messageTemplate);
+		return $this->_createMessage($this->messageTemplate ?: $this->defaultMessageTemplate);
 	}
 
 	/**
@@ -96,7 +101,7 @@ class LoggableEvent extends Event implements LoggableEventInterface, TranslatorA
 	 */
 	public function setLogPriority($priority)
 	{
-		if (! is_int($priority) || ($priority < Logger::EMERG) || ($priority >= Logger::DEBUG)) {
+		if (! is_int($priority) || ($priority < Logger::EMERG) || ($priority > Logger::DEBUG)) {
 			throw new InvalidArgumentException(sprintf(
 			'$priority must be an integer > 0 and < %d; received %s',
 			count($this->priorities),
@@ -135,10 +140,10 @@ class LoggableEvent extends Event implements LoggableEventInterface, TranslatorA
 	 */
 	protected function _createMessage($messageTemplate, $messageVariables = array())
 	{
-		$message = $this->_translateMessage($messageTemplate);
-
 		$messageVariables['name'] = strtoupper($this->getName());
 		$messageVariables['target'] = $this->getTarget();
+
+		$message = $this->_translateMessage($messageTemplate);
 
 		$message = preg_replace_callback('/%([^%]+)%/si', function($match) use($messageVariables) {
 			return array_key_exists($match[1], $messageVariables) ? $messageVariables[$match[1]] : $match[0];

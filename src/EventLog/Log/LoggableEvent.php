@@ -141,7 +141,7 @@ class LoggableEvent extends Event implements LoggableEventInterface, TranslatorA
 		$messageVariables['target'] = $this->getTarget();
 
 		$message = preg_replace_callback('/%([^%]+)%/si', function($match) use($messageVariables) {
-			return isset($messageVariables[$match[1]]) ? $messageVariables[$match[1]] : $match[0];
+			return array_key_exists($match[1], $messageVariables) ? $messageVariables[$match[1]] : $match[0];
 		}, $message);
 
 		return $message;
